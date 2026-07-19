@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sales & Revenue Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Chart JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- SheetJS -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-chart-simple"></i>
+
+            <h2>SalesPro</h2>
+
+        </div>
+
+        <ul>
+
+            <li class="active">
+                <i class="fa-solid fa-house"></i> Dashboard
+            </li>
+
+            <li>
+                <i class="fa-solid fa-file-import"></i> Import Sales
+            </li>
+
+            <li>
+                <i class="fa-solid fa-chart-line"></i> Analytics
+            </li>
+
+            <li>
+                <i class="fa-solid fa-sack-dollar"></i> Revenue
+            </li>
+
+            <li>
+                <i class="fa-solid fa-box"></i> Products
+            </li>
+
+            <li>
+                <i class="fa-solid fa-users"></i> Customers
+            </li>
+
+            <li>
+                <i class="fa-solid fa-earth-asia"></i> Regions
+            </li>
+
+            <li>
+                <i class="fa-solid fa-chart-pie"></i> Reports
+            </li>
+
+            <li>
+                <i class="fa-solid fa-gear"></i> Settings
+            </li>
+
+        </ul>
+
+    </aside>
+
+
+    <main class="main-content">
+
+
+        <header class="topbar">
+
+            <div class="left">
+
+                <h1>Sales & Revenue Dashboard</h1>
+
+                <p>Business Intelligence & Analytics</p>
+
+            </div>
+
+            <div class="right">
+
+                <input type="text" id="searchBox" placeholder="Search Product...">
+
+                <button id="themeBtn">
+
+                    <i class="fa-solid fa-moon"></i>
+
+                </button>
+
+                <img src="c:\Users\Rahul\OneDrive\Pictures\Camera Roll\IMG-20251128-WA0021.jpg" class="profile">
+
+            </div>
+
+        </header>
+
+        <section class="upload-section">
+
+            <div class="upload-box">
+
+                <h3>
+
+                    <i class="fa-solid fa-file-arrow-up"></i> Upload Sales Data
+
+                </h3>
+
+                <input type="file" id="excelFile" accept=".csv,.xlsx,.xls">
+
+            </div>
+
+        </section>
+
+        <section class="kpi-section">
+
+            <div class="card sales-card">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+
+                <div class="card-content">
+                    <h4>Total Sales</h4>
+                    <h2 id="totalSales">₹0</h2>
+                    <span class="growth positive">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        +12.5%
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="card revenue-card">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                </div>
+
+                <div class="card-content">
+                    <h4>Total Revenue</h4>
+                    <h2 id="totalRevenue">₹0</h2>
+                    <span class="growth positive">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        +8.7%
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="card profit-card">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+
+                <div class="card-content">
+                    <h4>Total Profit</h4>
+                    <h2 id="totalProfit">₹0</h2>
+                    <span class="growth positive">
+                        <i class="fa-solid fa-arrow-up"></i>
+                        +15.2%
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="card order-card">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-box-open"></i>
+                </div>
+
+                <div class="card-content">
+                    <h4>Total Orders</h4>
+                    <h2 id="totalOrders">0</h2>
+                    <span class="growth negative">
+                        <i class="fa-solid fa-arrow-down"></i>
+                        -2.4%
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="filter-section">
+
+            <select id="yearFilter">
+                <option value="">Select Year</option>
+                <option>2011</option>
+                <option>2012</option>
+                <option>2013</option>
+                <option>2014</option>
+                <option>2015</option>
+                <option>2016</option>
+                <option>2017</option>
+                <option>2018</option>
+                <option>2019</option>
+                <option>2020</option>
+                <option>2021</option>
+                <option>2022</option><option>2023</option>
+                <option>2023</option>
+                <option>2024</option>
+                <option>2025</option>
+                <option>2026</option>
+            </select>
+
+            <select id="monthFilter">
+                <option value="">Select Month</option>
+                <option>January</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>May</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+            </select>
+
+            <select id="regionFilter">
+                <option value="">All Regions</option>
+                <option>North</option>
+                <option>South</option>
+                <option>East</option>
+                <option>West</option>
+            </select>
+
+            <select id="categoryFilter">
+                <option value="">All Categories</option>
+                <option>Electronics</option>
+                <option>Furniture</option>
+                <option>Fashion</option>
+                <option>Grocery</option>
+                <option>gold</option>
+                <option>iron</option>
+            </select>
+
+            <button id="applyFilter">
+
+                <i class="fa-solid fa-filter"></i>
+
+
+            </button>
+
+            <button id="resetFilter">
+
+                <i class="fa-solid fa-rotate"></i>
+
+                Reset
+
+            </button>
+
+        </section>
+
+
+
+        <section class="chart-section">
+
+            <div class="chart-card large-card">
+
+                <div class="chart-header">
+
+                    <h3>
+                        <i class="fa-solid fa-chart-line"></i> Monthly Revenue Trend
+                    </h3>
+
+                    <button class="chart-btn">
+                        View Report
+                    </button>
+
+                </div>
+
+                <canvas id="lineChart"></canvas>
+
+            </div>
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+
+                    <h3>
+                        <i class="fa-solid fa-chart-column"></i> Sales by Region
+                    </h3>
+
+                </div>
+
+                <canvas id="barChart"></canvas>
+
+            </div>
+
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+
+                    <h3>
+                        <i class="fa-solid fa-chart-pie"></i> Category Distribution
+                    </h3>
+
+                </div>
+
+                <canvas id="pieChart"></canvas>
+
+            </div>
+
+
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+
+                    <h3>
+                        <i class="fa-solid fa-ranking-star"></i> Top Selling Products
+                    </h3>
+
+                </div>
+
+                <canvas id="productChart"></canvas>
+
+            </div>
+
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+
+                    <h3>
+                        <i class="fa-solid fa-money-bill-trend-up"></i> Profit Analysis
+                    </h3>
+
+                </div>
+
+                <canvas id="profitChart"></canvas>
+
+            </div>
+
+            <div class="chart-card">
+
+                <div class="chart-header">
+
+                    <h3>
+                        <i class="fa-solid fa-cart-flatbed"></i> Orders Overview
+                    </h3>
+
+                </div>
+
+                <canvas id="orderChart"></canvas>
+
+            </div>
+
+        </section>
+
+
+        <section class="stats-section">
+
+            <div class="stat-box">
+
+                <h4>Best Selling Product</h4>
+
+                <h2 id="bestProduct">
+                    --
+                </h2>
+
+            </div>
+
+            <div class="stat-box">
+
+                <h4>Highest Revenue Region</h4>
+
+                <h2 id="bestRegion">
+                    --
+                </h2>
+
+            </div>
+
+            <div class="stat-box">
+
+                <h4>Top Category</h4>
+
+                <h2 id="bestCategory">
+                    --
+                </h2>
+
+            </div>
+
+            <div class="stat-box">
+
+                <h4>Average Order Value</h4>
+
+                <h2 id="averageOrder">
+                    ₹0
+                </h2>
+
+            </div>
+
+        </section>
+
+
+        <section class="table-section">
+
+            <div class="table-header">
+
+                <h2>
+                    <i class="fa-solid fa-table"></i> Sales Records
+                </h2>
+
+                <div class="table-actions">
+
+                    <input type="text" id="tableSearch" placeholder="Search Product...">
+
+                    <button id="exportExcel">
+                        <i class="fa-solid fa-file-excel"></i>
+                        Export Excel
+                    </button>
+
+                    <button id="exportPDF">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        Export PDF
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="table-container">
+
+                <table id="salesTable">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Date</th>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Region</th>
+                            <th>Sales</th>
+                            <th>Revenue</th>
+                            <th>Profit</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <!-- Data will come from script.js -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <footer class="footer">
+
+            <p>
+                © 2026 SalesPro Dashboard | Developed by Rahul Kumar
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
